@@ -1,0 +1,31 @@
+# Dependency (akan di-install ulang di dalam Docker)
+node_modules
+vendor
+
+# Git
+.git
+.gitignore
+
+# Environment & Config Lokal
+.env
+.env.example
+.phpunit.result.cache
+docker-compose.yml
+Dockerfile
+
+# Storage keys (biasanya generated)
+storage/*.key
+
+# Build Assets (Kita build ulang di Dockerfile stage assets)
+/public/build
+/public/hot
+/public/storage
+
+# IDE Settings
+.idea
+.vscode
+
+# Documentation & Tests
+README.md
+phpunit.xml
+tests
