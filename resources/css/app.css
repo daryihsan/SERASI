@@ -1,11 +1,83 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+@layer components {
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* --- SIDEBAR CONTAINER --- */
+    .sidebar-container {
+        @apply flex flex-col w-72 bg-white border-r border-slate-200 fixed inset-y-0 left-0 z-30 transform transition-transform duration-300;
+    }
+
+    /* Media query Manual (Pengganti lg:static) */
+    @media (min-width: 1024px) {
+        .sidebar-container {
+            @apply static translate-x-0;
+        }
+    }
+
+    .sidebar-header {
+        @apply flex items-center justify-center h-24 border-b border-slate-100 px-6;
+    }
+
+    .sidebar-logo-text {
+        @apply flex items-center gap-3 font-extrabold text-3xl text-blue-700 tracking-tighter;
+    }
+
+    /* --- SIDEBAR LINKS --- */
+    /* SUDAH BERSIH: Tidak ada 'group' lagi disini */
+    .nav-link {
+        @apply flex items-center gap-3 px-5 py-4 rounded-xl transition-all duration-200 text-slate-600 font-bold text-lg w-full;
+    }
+
+    /* Hover State Manual */
+    .nav-link:hover {
+        @apply bg-blue-50 text-blue-700;
+    }
+
+    /* Active State */
+    .nav-link-active {
+        @apply bg-blue-600 text-white shadow-lg shadow-blue-200;
+    }
+
+    .nav-link-active:hover {
+        @apply bg-blue-700 text-white;
+    }
+
+    /* --- DROPDOWN --- */
+    .dropdown-item {
+        @apply block px-4 py-2 text-sm font-medium rounded-lg transition-colors text-slate-500;
+    }
+
+    .dropdown-item:hover {
+        @apply text-blue-600 bg-blue-50;
+    }
+    
+    .dropdown-item-active {
+        @apply text-blue-600 bg-blue-50;
+    }
+
+    /* --- TOMBOL & INPUT --- */
+    .btn-primary-lg {
+        @apply bg-blue-600 text-white font-bold text-lg py-3 px-8 rounded-xl transition-colors shadow-lg shadow-blue-200 flex items-center justify-center gap-2 shrink-0;
+    }
+
+    .btn-primary-lg:hover {
+        @apply bg-blue-700;
+    }
+
+    .input-search-lg {
+        @apply block w-full pl-12 pr-4 py-4 bg-slate-50 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all text-lg placeholder-slate-400;
+    }
+
+    /* --- CARD --- */
+    .card-recall {
+        @apply bg-white rounded-xl p-6 border border-slate-100 shadow-sm transition-shadow;
+    }
+
+    .card-recall:hover {
+        @apply shadow-md;
+    }
+
+    .badge-recall {
+        @apply bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide;
+    }
 }

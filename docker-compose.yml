@@ -1,0 +1,57 @@
+services:
+  # --- 1. Container Aplikasi (Laravel 12 + Apache) ---
+  serasi-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: serasi-laravel  # Nama container beda dengan BAP
+    ports:
+      - "8082:80"  # HOST PORT: 8082 (BAP pake 8080, jadi ini aman)
+    volumes:
+      - .:/var/www/html # Mirroring code
+      - ./php-custom.ini:/usr/local/etc/php/conf.d/php-custom.ini
+      - ./vhost.conf:/etc/apache2/sites-available/000-default.conf
+    depends_on:
+      - serasi-db
+    networks:
+      - serasi-network
+    restart: always
+
+  # --- 2. Container Database (MySQL 8.0) ---
+  serasi-db:
+    image: mysql:8.0
+    container_name: serasi-mysql  # Nama container beda
+    ports:
+      - "4407:3306" # HOST PORT: 4407 (BAP pake 4406)
+    environment:
+      MYSQL_DATABASE: db_serasi
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      # Volume khusus untuk serasi, jangan pakai nama 'db_data' yang generik
+      - serasi_db_data:/var/lib/mysql
+    networks:
+      - serasi-network
+    restart: always
+
+  # --- 3. Container phpMyAdmin (Opsional, untuk manage DB) ---
+  serasi-pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: serasi-phpmyadmin
+    ports:
+      - "8083:80" # HOST PORT: 8083 (BAP pake 8081)
+    environment:
+      PMA_HOST: serasi-db
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    depends_on:
+      - serasi-db
+    networks:
+      - serasi-network
+    restart: always
+
+networks:
+  serasi-network:
+    driver: bridge
+
+volumes:
+  serasi_db_data: # Volume persisten database
