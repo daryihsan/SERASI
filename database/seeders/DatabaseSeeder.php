@@ -21,14 +21,14 @@ class DatabaseSeeder extends Seeder
         User::create([
             'nip' => 'admin',
             'name' => 'Administrator Utama',
-            'password' => Hash::make('tikAdmiNbpomsmg'),
+            'password' => 'tikAdmiNbpomsmg',
             'role' => 'inspeksi'
         ]);
         
         User::create([
             'nip' => '198308192010121001',
             'name' => 'Agung Wijayanto, S.Kom',
-            'password' => Hash::make('tikbpomsmg'),
+            'password' => 'tikbpomsmg',
             'role' => 'inspeksi'
         ]);
     }

@@ -20,7 +20,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
+        'nip',      // INI YANG PENTING: Ganti email jadi nip
+        'role',     // Tambahkan role agar bisa disimpan
         'password',
     ];
 
@@ -42,7 +43,7 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
+            // 'email_verified_at' => 'datetime', // Hapus baris ini karena kita tidak pakai email
             'password' => 'hashed',
         ];
     }
