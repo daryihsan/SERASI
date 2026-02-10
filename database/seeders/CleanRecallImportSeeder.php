@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\RecallObat;
+use App\Models\Recall;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -41,7 +41,7 @@ class CleanRecallImportSeeder extends Seeder
                     if (empty($cleanBet) || $cleanBet == '-') continue;
 
                     // 4. Simpan Row Baru untuk SETIAP Batch Number
-                    RecallObat::create([
+                    Recall::create([
                         'no_report'         => $row->no_report,
                         'no_surat'          => $row->no_surat,
                         'tanggal'           => $cleanTanggal,
@@ -58,7 +58,7 @@ class CleanRecallImportSeeder extends Seeder
             }
         });
 
-        $count = RecallObat::count();
+        $count = Recall::count();
         $this->command->info("Sukses! Total data bersih sekarang: $count baris (setelah di-split).");
     }
 

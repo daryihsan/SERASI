@@ -39,7 +39,7 @@
 
             <nav class="flex-1 px-4 space-y-3 overflow-y-auto py-4">
                 <a href="{{ route('serasi.index') }}" 
-                   class="flex items-center gap-3 px-5 py-4 rounded-xl transition-all duration-200 font-bold text-lg w-full group
+                   class="flex items-center gap-3 px-5 py-3 rounded-xl transition-all duration-200 font-bold text-base w-full group
                    {{ request()->routeIs('serasi.index') ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'text-slate-600 hover:bg-blue-50 hover:text-blue-700' }}">
                    <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                    <span>Dashboard</span>
@@ -47,7 +47,7 @@
 
                 <div>
                     <button @click="insertOpen = !insertOpen" type="button" 
-                            class="flex items-center justify-between gap-3 px-5 py-4 rounded-xl transition-all duration-200 font-bold text-lg w-full text-slate-600 hover:bg-blue-50 hover:text-blue-700"> 
+                            class="flex items-center justify-between gap-3 px-5 py-3 rounded-xl transition-all duration-200 font-bold text-base w-full text-slate-600 hover:bg-blue-50 hover:text-blue-700"> 
                         <div class="flex items-center gap-3">
                             <svg class="w-6 h-6 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span>Insert Data</span>
@@ -55,8 +55,8 @@
                         <svg class="w-5 h-5 shrink-0 transition-transform duration-200" :class="insertOpen ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     <div x-show="insertOpen" x-cloak x-transition.origin.top.duration.200ms class="pl-14 pr-2 py-2 space-y-1">
-                        <a href="{{ route('serasi.insert.manual') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('serasi.insert.manual') ? 'text-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600 hover:bg-blue-50' }}">• Input Manual</a>
-                        <a href="{{ route('serasi.insert.excel') }}" class="block px-4 py-2 text-sm font-medium rounded-lg transition-colors {{ request()->routeIs('serasi.insert.excel') ? 'text-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600 hover:bg-blue-50' }}">• Upload Excel</a>
+                        <a href="{{ route('serasi.insert.manual') }}" class="block px-4 py-3 text-base font-medium rounded-lg transition-colors {{ request()->routeIs('serasi.insert.manual') ? 'text-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600 hover:bg-blue-50' }}"> Input Manual</a>
+                        <a href="{{ route('serasi.insert.excel') }}" class="block px-4 py-3 text-base font-medium rounded-lg transition-colors {{ request()->routeIs('serasi.insert.excel') ? 'text-blue-600 bg-blue-50' : 'text-slate-500 hover:text-blue-600 hover:bg-blue-50' }}"> Upload Excel</a>
                     </div>
                 </div>
             </nav>

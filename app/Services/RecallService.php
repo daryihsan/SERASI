@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\DrugRecall;
+use App\Models\Recall;
 use App\DataTransferObjects\RecallDto;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -11,7 +11,7 @@ class RecallService
 {
     public function search(string $keyword)
     {
-        return DrugRecall::query()
+        return Recall::query()
             ->where('nama_obat', 'LIKE', "%{$keyword}%")
             ->orWhere('nie', 'LIKE', "%{$keyword}%")
             ->orWhere('no_bets', 'LIKE', "%{$keyword}%")
@@ -19,10 +19,10 @@ class RecallService
             ->paginate(10);
     }
 
-    public function store(RecallDto $dto): DrugRecall
+    public function store(RecallDto $dto): Recall
     {
         return DB::transaction(function () use ($dto) {
-            return DrugRecall::create($dto->toArray());
+            return Recall::create($dto->toArray());
         });
     }
 
