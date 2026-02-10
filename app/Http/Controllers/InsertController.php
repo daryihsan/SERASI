@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Recall;
 use App\Models\DetailObat;
 use App\Models\DetailKosmetik;
+use App\Models\DetailObatTradisional;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\RecallImport;
+use Maatwebsite\Excel\HeadingRowImport;
 
 class InsertController extends Controller
 {
@@ -18,6 +23,42 @@ class InsertController extends Controller
     public function excel()
     {
         return view('serasi.insert.excel');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'kategori' => 'required',
+            'file'     => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+        try {
+            // Panggil Class Import, kirim kategori yang dipilih user
+            Excel::import(new RecallImport($request->kategori), $request->file('file'));
+
+            return redirect()->route('serasi.index')->with('success', 'Data Excel berhasil diimport!');
+        } catch (\Exception $e) {
+            return back()->withErrors(['file' => 'Gagal import: ' . $e->getMessage()]);
+        }
+    }
+
+    private function detectHeaderRow($file)
+    {
+        // Baca 10 baris pertama saja untuk scanning
+        $headings = (new HeadingRowImport)->toArray($file);
+        
+        // $headings[0] adalah sheet pertama
+        foreach ($headings[0] as $rowIndex => $row) {
+            // Ubah semua jadi huruf kecil biar pencarian fleksibel
+            $rowValues = array_map(fn($val) => strtolower($val ?? ''), $row);
+
+            // Cek apakah baris ini mengandung kata kunci wajib (misal: 'no surat' dan 'nama produk')
+            if (in_array('no surat', $rowValues) && in_array('nama produk', $rowValues)) {
+                return $rowIndex + 1; // Ditambah 1 karena Excel mulai dari baris 1, Array mulai dari 0
+            }
+        }
+
+        return 3; 
     }
 
     public function store(Request $request)
@@ -51,6 +92,13 @@ class InsertController extends Controller
                     $detail = DetailKosmetik::create([
                         'nomor_notifikasi' => $item['nomor_notifikasi'] ?? null,
                         'tms_penguji'      => $item['tms_penguji'] ?? null,
+                    ]);
+                }
+
+                elseif ($request->kategori == 'obat_tradisional') {
+                    $detail = \App\Models\DetailObatTradisional::create([
+                        'nie' => $item['nie'] ?? null,
+                        'ed'  => $item['ed'] ?? null,
                     ]);
                 }
                 // Jika kategori lain, $detail tetap null atau buat model lain

@@ -4,7 +4,7 @@
 <div x-data="{ search: '{{ request('q') }}', isLoading: false }" class="container mx-auto max-w-6xl">
     
     <div class="flex flex-col items-center justify-center text-center mb-10">
-        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Data Recall Obat & Kosmetik</h1>
+        <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight">Surat Edaran Recall Terintegrasi</h1>
         <p class="text-slate-500 mt-3 text-lg max-w-2xl">
             Cari dan validasi data produk yang ditarik dari peredaran.
         </p>
@@ -69,8 +69,14 @@
                         <div class="flex items-center gap-2 mb-2">
                             @if($item->kategori == 'obat')
                                 <span class="bg-blue-100 text-blue-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Obat</span>
+                            @elseif($item->kategori == 'obat_tradisional')
+                                <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Obat Tradisional</span>
                             @elseif($item->kategori == 'kosmetik')
                                 <span class="bg-pink-100 text-pink-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Kosmetik</span>
+                            @elseif($item->kategori == 'suplemen_kesehatan')
+                                <span class="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Suplemen</span>
+                            @elseif($item->kategori == 'pangan')
+                                <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Pangan</span>
                             @else
                                 <span class="bg-slate-100 text-slate-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">{{ $item->kategori }}</span>
                             @endif
@@ -88,7 +94,7 @@
                         
                         <div class="mt-4 flex flex-wrap gap-6 text-sm">
                             
-                            @if($item->kategori == 'obat' && $item->detail)
+                            @if(in_array($item->kategori, ['obat', 'obat_tradisional', 'pangan', 'suplemen_kesehatan']) && $item->detail)
                                 <div class="bg-slate-50 px-3 py-2 rounded-lg border border-slate-100">
                                     <span class="block text-slate-400 text-xs uppercase font-bold tracking-wider mb-1">Nomor NIE</span>
                                     <span class="font-mono text-slate-700 font-semibold">{{ $item->detail->nie ?? '-' }}</span>
@@ -111,7 +117,7 @@
 
                     <div class="w-full md:w-auto mt-4 md:mt-0 md:text-right border-t md:border-t-0 border-slate-100 pt-4 md:pt-0">
                         
-                        @if($item->kategori == 'obat' && $item->detail && $item->detail->ed)
+                        @if(in_array($item->kategori, ['obat', 'obat_tradisional', 'pangan', 'suplemen_kesehatan']) && $item->detail && $item->detail->ed)
                             <span class="block text-slate-400 text-xs uppercase font-bold mb-1">Expired Date</span>
                             <div class="text-lg font-bold text-slate-800 bg-red-50 text-red-600 px-3 py-1 rounded inline-block">
                                 {{ \Carbon\Carbon::parse($item->detail->ed)->format('M Y') }}
@@ -136,7 +142,7 @@
         @empty
             <div class="text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300">
                 <h3 class="text-xl font-bold text-slate-900 mb-2">Data tidak ditemukan</h3>
-                <p class="text-slate-500">Belum ada data recall yang tersimpan.</p>
+                <p class="text-slate-500">Belum ada data recall yang tersimpan sesuai kriteria pencarian.</p>
             </div>
         @endforelse
     </div>

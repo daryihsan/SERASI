@@ -25,5 +25,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/manual', [InsertController::class, 'manual'])->name('manual');
         Route::get('/excel', [InsertController::class, 'excel'])->name('excel');
         Route::post('/store', [InsertController::class, 'store'])->name('store');
+        Route::post('/import', [InsertController::class, 'import'])->name('import');
     });
 });

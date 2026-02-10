@@ -4,7 +4,7 @@
 <div class="container mx-auto max-w-5xl">
     <div class="bg-white p-8 rounded-2xl shadow border border-slate-100">
         
-        <h2 class="text-2xl font-bold mb-6 text-slate-800">Input Data Recall (Multi-Item)</h2>
+        <h2 class="text-2xl font-bold mb-6 text-slate-800">Input Data Recall</h2>
 
         @if ($errors->any())
             <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg relative">
@@ -21,11 +21,10 @@
               x-data="recallForm()">
             @csrf
 
-            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8">
-                <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
-                    1. Data Surat & Pabrik (Header)
-                </h3>
-                
+            <h3 class="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 border-b border-slate-200 pb-2">
+                1. Data Surat & Pabrik (Header)
+            </h3>
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 mb-8">                     
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-5">
                     <div>
                         <label class="block text-sm font-bold text-slate-700 mb-2">Kategori Produk</label>
@@ -38,7 +37,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-bold text-slate-700 mb-2">Pabrik / Importir</label>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Pabrik / Produsen</label>
                         <input type="text" name="pabrik_importir" class="w-full border-slate-300 rounded-xl px-4 py-3 bg-white focus:ring-2 focus:ring-blue-500" placeholder="Nama perusahaan..." required>
                     </div>
                 </div>
@@ -118,8 +117,21 @@
                                         </div>
                                     </div>
                                 </template>
+
+                                <template x-if="kategori === 'obat_tradisional'">
+                                    <div class="md:col-span-5 grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs font-bold text-emerald-600 mb-1">Nomor NIE</label>
+                                            <input type="text" :name="`items[${index}][nie]`" class="w-full border-emerald-200 bg-emerald-50 rounded-lg px-3 py-2 text-sm focus:ring-emerald-500 placeholder-emerald-300" placeholder="TR...">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-bold text-emerald-600 mb-1">Exp. Date</label>
+                                            <input type="date" :name="`items[${index}][ed]`" class="w-full border-emerald-200 bg-emerald-50 rounded-lg px-3 py-2 text-sm focus:ring-emerald-500">
+                                        </div>
+                                    </div>
+                                </template>
                                 
-                                <template x-if="!['obat', 'kosmetik'].includes(kategori)">
+                                <template x-if="!['obat', 'kosmetik', 'obat_tradisional'].includes(kategori)">
                                      <div class="md:col-span-5">
                                         <div class="p-2 bg-slate-100 rounded text-xs text-slate-400 italic text-center mt-4">
                                             Detail spesifik untuk kategori ini belum diset.

@@ -29,7 +29,7 @@ class RecallController extends Controller
 
                 $q->orWhereHasMorph(
                     'detail', 
-                    ['App\Models\DetailObat', 'App\Models\DetailKosmetik'],
+                    ['App\Models\DetailObat', 'App\Models\DetailKosmetik', 'App\Models\DetailObatTradisional'],
                     function (Builder $childQuery, $type) use ($keyword) {
                         if ($type === 'App\Models\DetailObat') {
                             $childQuery->where('nie', 'LIKE', "%{$keyword}%");
